@@ -16,6 +16,10 @@ mongoose.connect(process.env.MONGO_URI, {
   useUnifiedTopology: true
 });
 
+// Models
+const User = require('./models/User');
+const Exercise = require('./models/Exercise');
+
 // Routes
 app.get('/', (req, res) => {
   res.sendFile(__dirname + '/views/index.html');
@@ -49,7 +53,7 @@ app.post('/api/users/:_id/exercises', async (req, res) => {
     const { _id } = req.params;
     let { description, duration, date } = req.body;
     
-    // Validate required fields
+    // Validation
     if (!description || !duration) {
       return res.status(400).json({ error: 'Description and duration are required' });
     }
